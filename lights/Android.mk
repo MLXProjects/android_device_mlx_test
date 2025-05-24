@@ -15,7 +15,7 @@
 
 LOCAL_PATH := $(call my-dir)
 
-# Lights HAL module implemennation, not prelinked and stored in
+# Lights HAL module implementation, not prelinked and stored in
 # hw/lights.default.so
 include $(CLEAR_VARS)
 LOCAL_PRELINK_MODULE := false

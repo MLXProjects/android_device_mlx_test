@@ -1,6 +1,3 @@
-# Include any module here
-include $(call all-subdir-makefiles)
-
 # Minimal config for generic ARM
 TARGET_NO_BOOTLOADER := true
 TARGET_NO_KERNEL := true

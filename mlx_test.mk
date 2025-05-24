@@ -1,8 +1,11 @@
-# Inherit everything from the base generic product
+# inherit everything from the base generic product
 $(call inherit-product, build/target/product/generic.mk)
 
 # add device config
 include $(LOCAL_PATH)/BoardConfig.mk
+
+# include any module here
+include $(call all-subdir-makefiles)
 
 # override device-specific info
 PRODUCT_NAME := mlx_test
@@ -15,7 +18,7 @@ PRODUCT_MANUFACTURER := MLX
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/rootfs/init.rc:root/init.rc
 
-# Live wallpapers
+# live wallpapers
 PRODUCT_PACKAGES += \
     LiveWallpapers \
     LiveWallpapersPicker \
