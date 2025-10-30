@@ -21,8 +21,8 @@ BOARD_HAVE_BLUETOOTH := false
 HAVE_NO_RFKILL_SWITCH := true
 # without this, everything segfaults
 ARCH_ARM_HAVE_TLS_REGISTER := true
-# use EXT2 for images
-TARGET_USERIMAGES_USE_EXT2 := true
+# use EXT4 for images
+TARGET_USERIMAGES_USE_EXT4 := true
 # disable sparse - not sure if it's even supported at Froyo
 TARGET_USERIMAGES_SPARSE_EXT_DISABLED := true
 # enable classes.dex pre-optimization
