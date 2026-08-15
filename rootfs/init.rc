@@ -1,3 +1,4 @@
+
 on init
 
 sysclktz 0
@@ -79,16 +80,13 @@ loglevel 3
     # 5.0 %
     write /dev/cpuctl/bg_non_interactive/cpu.shares 52
 
-# mount partitions
+# mount mtd partitions
     # Mount /system rw first to give the filesystem a chance to save a checkpoint
-    # mount yaffs2 mtd@system /system
-    # mount yaffs2 mtd@system /system ro remount
-
-    # Mount from loop device - needs SD to be mounted first
-    # mount ext4 loop@/imgs/froyo/system.img /system ro
+    mount ext4 /dev/block/mmcblk0p5 /system
+    mount ext4 /dev/block/mmcblk0p5 /system ro remount
 
     # We chown/chmod /data again so because mount is run as root + defaults
-    # mount yaffs2 mtd@userdata /data nosuid nodev
+    mount ext4 /dev/block/mmcblk0p6 /data nosuid nodev
     chown system system /data
     chmod 0771 /data
 
@@ -165,6 +163,13 @@ loglevel 3
     chmod 0770 /cache/lost+found
 
 on boot
+# USB composite gadget: expose ADB to the host (Google VID/PID)
+    write /sys/class/android_usb/android0/enable 0
+    write /sys/class/android_usb/android0/idVendor 0x18D1
+    write /sys/class/android_usb/android0/idProduct 0x4E11
+    write /sys/class/android_usb/android0/functions adb
+    write /sys/class/android_usb/android0/enable 1
+
 # basic network init
     ifup lo
     hostname localhost
@@ -224,6 +229,12 @@ on boot
     chmod 0660 /sys/power/wake_lock
     chmod 0660 /sys/power/wake_unlock
     chown system system /sys/class/timed_output/vibrator/enable
+    chown system system /sys/class/backlight/panel/brightness
+    chmod 0660 /sys/class/backlight/panel/brightness
+    chown system system /sys/class/backlight/touchkey-led/brightness
+    chmod 0660 /sys/class/backlight/touchkey-led/brightness
+    chown system system /sys/class/camera/rear/rear_flash
+    chmod 0666 /sys/class/camera/rear/rear_flash
     chown system system /sys/class/leds/keyboard-backlight/brightness
     chown system system /sys/class/leds/lcd-backlight/brightness
     chown system system /sys/class/leds/button-backlight/brightness
@@ -265,9 +276,10 @@ on boot
 service console /system/bin/sh
     console
 
-# adbd is controlled by the persist.service.adb.enable system property
+# adbd starts at boot (default class); it polls /dev/android_adb in a
+# 1s retry loop until the ADB function is up. 'adb root' is honored via
+# ro.debuggable=1 in the eng build.
 service adbd /sbin/adbd
-    disabled
 
 # adbd on at boot in emulator
 on property:ro.kernel.qemu=1
@@ -278,6 +290,10 @@ on property:persist.service.adb.enable=1
 
 on property:persist.service.adb.enable=0
     stop adbd
+
+# translate the first multi-touch screen into a single-touch
+# "mlx_vtouch" uinput device before the framework parses /dev/input
+service vtouch /sbin/vtouch
 
 service servicemanager /system/bin/servicemanager
     user system

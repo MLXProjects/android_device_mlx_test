@@ -8,15 +8,15 @@ include $(LOCAL_PATH)/BoardConfig.mk
 include $(call all-subdir-makefiles)
 
 # override device-specific info
-PRODUCT_NAME := mlx_test
-PRODUCT_DEVICE := mlx_test
-PRODUCT_MODEL := MLX test device
-PRODUCT_BRAND := MLX
+PRODUCT_NAME := full_test
 PRODUCT_MANUFACTURER := MLX
+PRODUCT_BRAND := MLX
+PRODUCT_DEVICE := test
+PRODUCT_MODEL := Test device
 
 # custom init script
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/rootfs/init.rc:root/init.rc
+    $(LOCAL_PATH)/rootfs/init.rc:root/init.rc 
 
 # live wallpapers
 PRODUCT_PACKAGES += \
@@ -25,5 +25,17 @@ PRODUCT_PACKAGES += \
     VisualizationWallpapers \
     librs_jni
 
+# framebuffer-only gralloc HAL
+PRODUCT_PACKAGES += \
+    gralloc.test
+
+# minimal lights HAL
+PRODUCT_PACKAGES += \
+    lights.test
+
+# boot-time multi-touch to single-touch input proxy daemon
+PRODUCT_PACKAGES += \
+    vtouch
+
 # custom sizes & locales
-PRODUCT_LOCALES := ldpi hdpi mdpi nodpi en_US es_US
+PRODUCT_LOCALES := en_US es_US ldpi hdpi mdpi nodpi

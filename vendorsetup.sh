@@ -1,1 +1,1 @@
-add_lunch_combo mlx_test-eng
+add_lunch_combo full_test-eng
