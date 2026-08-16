@@ -39,3 +39,6 @@ PRODUCT_PACKAGES += \
 
 # custom sizes & locales
 PRODUCT_LOCALES := en_US es_US ldpi hdpi mdpi nodpi
+
+# set dpi - please change according to your screen size!
+ADDITIONAL_BUILD_PROPERTIES += ro.sf.lcd_density=160

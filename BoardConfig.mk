@@ -1,6 +1,5 @@
 # Minimal config for generic ARM
 TARGET_NO_BOOTLOADER := true
-TARGET_NO_KERNEL := false
 TARGET_NO_RECOVERY := true
 TARGET_NO_RADIOIMAGE := true
 TARGET_ARCH := arm
