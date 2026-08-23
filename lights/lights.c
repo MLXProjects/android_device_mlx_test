@@ -30,6 +30,10 @@
 #define FLASHLIGHT_FILE "/sys/class/camera/rear/rear_flash"
 #define MAX_BRIGHTNESS 255
 
+#ifndef LIGHT_ID_FLASHLIGHT
+#define LIGHT_ID_FLASHLIGHT "flashlight"
+#endif
+
 struct lights_device_t {
     struct hw_device_t common;
     int (*set_light)(struct lights_device_t* dev,
