@@ -1,10 +1,10 @@
 
 project system/core/
 diff --git a/mkbootimg/mkbootimg.c b/mkbootimg/mkbootimg.c
-index 3642647..5d92ca0 100644
+index 55c4925..c760869 100644
 --- a/mkbootimg/mkbootimg.c
 +++ b/mkbootimg/mkbootimg.c
-@@ -104,7 +104,7 @@ int main(int argc, char **argv)
+@@ -106,7 +106,7 @@ int main(int argc, char **argv)
      char *cmdline = "";
      char *bootimg = 0;
      char *board = "";

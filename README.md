@@ -1,5 +1,5 @@
-# Generic device tree for Android 2.2
-No partitions, just IMGs and some fun :)
+# Generic device tree for CyanogenMod 6
+Because yes :P
 
 ## What's this
 I always wanted to downgrade newer devices to older Android versions, and this is my best attempt to do so.  
@@ -19,7 +19,7 @@ Aside from a reason to do this (because really, why tf are you messing around wi
   - Binder
   - Ashmem
 * If you want logs, a device with UART output or kernel <= 3.8, since ADB on froyo uses an older /dev node.
-* A 32-bit Ubuntu 12.04 or older machine, to build AOSP 2.2 correctly. 64-bit is a pain to set up and isn't worth it.
+* A 32-bit Ubuntu 12.04 or older machine, to build CyanogenMod 6 correctly. 64-bit is a pain to set up and isn't worth it.
 * Time (if you are here, I think you already have plenty)
 * Patience
 * Luck, tons of it
@@ -41,7 +41,8 @@ Aside from a reason to do this (because really, why tf are you messing around wi
 * Modular Wi-Fi and Bluetooth (Wi-Fi is hard since NL80211 wasn't available until ICS, not sure about bluetooth)
 
 ## Patches:
-The following modifications can be made to the framework for convenience:
+The following modifications need to be made to the CyanogenMod source:
+* (mandatory) cm6-build-fixes: some repositories were left in broken state during the froyo->gingerbread CyanogenMod upgrade, this fixes that.
 * (optional) mkbootimg: patched to use pagesize of 4096 instead of the hardcoded 2048 - default value doesn't seem to work on eMMC devices
 
 ## Modules
