@@ -172,8 +172,9 @@ int mapFrameBufferLocked(struct private_module_t* module)
     info.activate = FB_ACTIVATE_NOW;
 
     /*
-     * MLX test panel is 32-bit BGRA (blue first, then green, red).
+     * this would set display as 32-bit BGRA - but let's use fbdev defaults
      */
+    /*
     info.bits_per_pixel = 32;
     info.red.offset     = 16;
     info.red.length     = 8;
@@ -183,7 +184,7 @@ int mapFrameBufferLocked(struct private_module_t* module)
     info.blue.length    = 8;
     info.transp.offset  = 24;
     info.transp.length  = 8;
-
+    */
     /*
      * Request NUM_BUFFERS screens (at lest 2 for page flipping)
      */
@@ -343,11 +344,22 @@ int fb_device_open(hw_module_t const* module, const char* name,
         status = mapFrameBuffer(m);
         if (status >= 0) {
             int stride = m->finfo.line_length / (m->info.bits_per_pixel >> 3);
+            int format = HAL_PIXEL_FORMAT_RGB_565;
+			/* check for 32/24bpp */
+			if (m->info.bits_per_pixel == 32){
+				/* detect RGB or BGR */
+                if (m->info.blue.offset == 0)
+					format = HAL_PIXEL_FORMAT_BGRA_8888;
+                else format = HAL_PIXEL_FORMAT_RGBA_8888;
+			}
+			else if (m->info.bits_per_pixel == 24){
+                format = HAL_PIXEL_FORMAT_RGB_888;
+			}
             const_cast<uint32_t&>(dev->device.flags) = 0;
             const_cast<uint32_t&>(dev->device.width) = m->info.xres;
             const_cast<uint32_t&>(dev->device.height) = m->info.yres;
             const_cast<int&>(dev->device.stride) = stride;
-            const_cast<int&>(dev->device.format) = HAL_PIXEL_FORMAT_BGRA_8888;
+            const_cast<int&>(dev->device.format) = format;
             const_cast<float&>(dev->device.xdpi) = m->xdpi;
             const_cast<float&>(dev->device.ydpi) = m->ydpi;
             const_cast<float&>(dev->device.fps) = m->fps;
