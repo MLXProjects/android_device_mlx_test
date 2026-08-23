@@ -1,6 +1,7 @@
 # Minimal config for generic ARM
 TARGET_NO_BOOTLOADER := true
-TARGET_NO_RECOVERY := true
+# if recovery is disabled, update.zip build (make otapackage) gets disabled too
+# TARGET_NO_RECOVERY := true
 TARGET_NO_RADIOIMAGE := true
 TARGET_ARCH := arm
 TARGET_ARCH_VARIANT := armv7-a

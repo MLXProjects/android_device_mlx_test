@@ -1,0 +1,7 @@
+# sample recovery.fstab for MLX test board
+/boot      emmc      /dev/block/mmcblk0p2   defaults
+/recovery  emmc      /dev/block/mmcblk0p3   defaults
+/cache     ext4      /dev/block/mmcblk0p4   rw
+/system    ext4      /dev/block/mmcblk0p5   rw
+/data      ext4      /dev/block/mmcblk0p6   rw
+/sdcard    vfat      /dev/block/mmcblk1p1   rw
